@@ -185,3 +185,7 @@ fabric.properties
 .idea/
 
 weights/
+outputs/
+datasets/
+
+yolov8n.pt
