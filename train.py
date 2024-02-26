@@ -29,12 +29,10 @@ def main(args):
         ]
 
     if args.pretrained:
-        print("Using pretrained model")
         model = YOLO(args.pretrained_weights)
     else:
         model = YOLO()
 
-    print(devices)
     results = model.train(
         model=pretrained_weights_path,
         data=dataset_config_path,
