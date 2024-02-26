@@ -1,0 +1,13 @@
+path: fruit_dataset
+train: train/images
+val: valid/images
+test: test/images
+
+# Classes
+names:
+  0: Apple
+  1: Banana
+  2: Grape
+  3: Orange
+  4: Pineapple
+  5: Watermelon
