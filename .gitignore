@@ -187,6 +187,6 @@ fabric.properties
 weights/
 outputs/
 datasets/
-validation_results/
+runs/
 test_results/
 yolov8n.pt
