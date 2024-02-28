@@ -17,9 +17,8 @@ def main(args):
 
     model = YOLO(model_path)
     metrics = model.val(
-        data=data_config_path, imgsz=args.imgsz, batch=args.batch, save_json=True
+        data=data_config_path, imgsz=args.imgsz, batch=args.batch, save_json=True, conf=args.conf
     )
-    print(metrics)
 
 
 if __name__ == "__main__":
@@ -30,6 +29,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--imgsz", type=int, default=640, help="Image size")
     parser.add_argument("--batch", type=int, default=16, help="Batch size")
+    parser.add_argument("--conf", type=float, default=0.5, help="Confidence threshold")
 
     args = parser.parse_args()
     main(args)
