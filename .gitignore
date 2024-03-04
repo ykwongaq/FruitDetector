@@ -190,3 +190,5 @@ datasets/
 runs/
 test_results/
 yolov8n.pt
+
+.vscode/
