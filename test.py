@@ -13,10 +13,21 @@ def main(args):
     assert os.path.exists(data_folder), f"Data folder {data_folder} does not exist"
     assert os.path.isdir(data_folder), f"Data folder {data_folder} is not a directory"
 
+    imgsz = args.imgsz
+    if "," in imgsz:
+        imgsz = tuple(map(int, imgsz.split(",")))
+    else:
+        imgsz = int(imgsz)
+
     model = YOLO(model_path)
-    results = model.predict(data_folder, save=True, conf=args.conf)
-    for result in results:
-        print(result)
+    results = model.predict(
+        data_folder,
+        save=True,
+        conf=args.conf,
+        imgsz=imgsz,
+        save_txt=True,
+        save_conf=True,
+    )
 
 
 if __name__ == "__main__":
@@ -24,5 +35,11 @@ if __name__ == "__main__":
     parser.add_argument("--model", type=str, help="Path to the testing model")
     parser.add_argument("--data", type=str, help="Path to the data folder")
     parser.add_argument("--conf", type=float, default=0.5, help="Confidence threshold")
+    parser.add_argument(
+        "--imgsz",
+        type=str,
+        default="640",
+        help="Defines the image size for inference. Can be a single integer 640 for square resizing or a (height, width) tuple. For example 640,640",
+    )
     args = parser.parse_args()
     main(args)
