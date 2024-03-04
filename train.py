@@ -98,7 +98,7 @@ if __name__ == "__main__":
         "--exist_ok",
         action="store_true",
         help="If True, allows overwriting of an existing project/name directory. Useful for iterative experimentation "
-             "without needing to manually clear previous outputs.",
+        "without needing to manually clear previous outputs.",
     )
     parser.add_argument(
         "--resume", action="store_true", help="Resume training from the last checkpoint"
