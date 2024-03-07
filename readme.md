@@ -10,6 +10,7 @@ This project is used to detect the 3D position of following fruit 🍎:
 | 3 | Grapes |
 | 4 | Raspberries |
 
+The output 3D position (xyz) represent the offset from the origin (position of camera) in term `mm`
 ## How to use
 
 ### 1. Set up Anaconda environment
