@@ -189,6 +189,7 @@ outputs/
 datasets/
 runs/
 test_results/
+location_results/
 yolov8n.pt
 
 .vscode/
