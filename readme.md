@@ -5,10 +5,15 @@ This project is used to detect the 3D position of following fruit 🍎:
 | Fruit ID  | Name |
 |--------|--------|
 | 0  | Banana    |
-| 1 | Orange |
-| 2 | Pomegranate |
+| 1 | Peeled Orange |
+| 2 | Cut Pomegranate |
 | 3 | Grapes |
 | 4 | Raspberries |
+| 5 | Apple |
+| 6 | Orange |
+| 7 | Pomegranate |
+
+Note that apple and orange may be removed in the future
 
 The output 3D position (xyz) represent the offset from the origin (position of camera) in term `mm`
 ## How to use
