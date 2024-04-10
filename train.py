@@ -1,5 +1,7 @@
 import argparse
 import os
+import yaml
+
 from datetime import datetime
 
 from ultralytics import YOLO
@@ -28,17 +30,24 @@ def main(args):
             int(device) for device in args.devices.split(",") if device.isdigit()
         ]
 
-    if args.pretrained:
-        model = YOLO(args.pretrained_weights)
+    model = YOLO(args.pretrained_weights)
+
+    imgsz = args.imgsz
+    if "," in imgsz:
+        imgsz = tuple(map(int, imgsz.split(",")))
     else:
-        model = YOLO()
+        imgsz = int(imgsz)
+
+    # with open(dataset_config_path, "r") as file:
+    #     dataset_config = yaml.safe_load(file)
+    # augmentations = dataset_config.get("augmentations", None)
 
     results = model.train(
         model=pretrained_weights_path,
         data=dataset_config_path,
         epochs=args.epochs,
         batch=args.batch_size,
-        imgsz=args.img_size,
+        imgsz=imgsz,
         save_period=args.save_period,
         workers=args.workers,
         device=devices,
@@ -55,38 +64,41 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset_config",
         type=str,
-        default="./configs/coco128.yaml",
+        default="./configs/fruit_dataset.yaml",
         help="Path to dataset config file",
     )
     parser.add_argument(
         "--pretrained_weights",
         type=str,
-        default="./weights/yolov8m.pt",
+        default="./weights/yolov8x.pt",
         help="Path to pretrained weights",
     )
     parser.add_argument(
         "--devices",
         type=str,
-        default="0",
+        default="0,1,2,3",
         help="Comma separated list of GPU device IDs to use for training",
     )
     parser.add_argument(
-        "--epochs", type=int, default=300, help="Number of epochs to train for"
+        "--epochs", type=int, default=400, help="Number of epochs to train for"
     )
     parser.add_argument(
-        "--batch_size", type=int, default=16, help="Batch size for training"
+        "--batch_size", type=int, default=64, help="Batch size for training"
     )
     parser.add_argument(
-        "--img_size", type=int, default=640, help="Image size for training"
+        "--imgsz",
+        type=str,
+        default="360,640",
+        help="Image size for training.  Can be a single integer 640 for square resizing or a (height, width) tuple. For example 640,640",
     )
     parser.add_argument(
         "--save_period",
         type=int,
-        default=100,
+        default=50,
         help="Number of epochs between saving model weights",
     )
     parser.add_argument(
-        "--workers", type=int, default=8, help="Number of workers for data loading"
+        "--workers", type=int, default=32, help="Number of workers for data loading"
     )
     parser.add_argument(
         "--output",
@@ -103,11 +115,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--resume", action="store_true", help="Resume training from the last checkpoint"
     )
-    parser.add_argument(
-        "--pretrained",
-        action="store_true",
-        help="Use pretrained weights for the backbone",
-    )
+
     parser.add_argument(
         "--verbose", action="store_true", help="Print verbose logs during training"
     )
