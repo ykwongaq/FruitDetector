@@ -34,15 +34,16 @@ def main(args):
 
     imgsz = args.imgsz
     if "," in imgsz:
-        imgsz = tuple(map(int, imgsz.split(",")))
+        imgsz = list(map(int, imgsz.split(",")))
     else:
         imgsz = int(imgsz)
 
-    # with open(dataset_config_path, "r") as file:
-    #     dataset_config = yaml.safe_load(file)
-    # augmentations = dataset_config.get("augmentations", None)
+    with open(dataset_config_path, "r") as file:
+        dataset_config = yaml.safe_load(file)
+    augmentations = dataset_config.get("augmentations", None)
 
     results = model.train(
+        **augmentations,
         model=pretrained_weights_path,
         data=dataset_config_path,
         epochs=args.epochs,
@@ -80,7 +81,7 @@ if __name__ == "__main__":
         help="Comma separated list of GPU device IDs to use for training",
     )
     parser.add_argument(
-        "--epochs", type=int, default=400, help="Number of epochs to train for"
+        "--epochs", type=int, default=300, help="Number of epochs to train for"
     )
     parser.add_argument(
         "--batch_size", type=int, default=64, help="Batch size for training"
